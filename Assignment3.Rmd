@@ -247,12 +247,4 @@ cor(df2$Month, df2$FlightNum)
 by(df2$FlightNum, df2$FlightNum, FUN = mean)
 ```
 
-- ifelse
-- case_when
 
-17.  In the dataset in #16, practice the follows.  You can reuse the code of 16. 
-
-- Create a categorical variable from a continuous variable
-- From one categorical variable, create a new categorical variable with fewer categories
-
-If you do not have a data, you can use [the titanic dataset](https://www.kaggle.com/competitions/titanic/overview), which can be downloaded at [this link](../data/titanic.csv)
