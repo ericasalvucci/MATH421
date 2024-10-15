@@ -48,7 +48,7 @@ print(na_count)
 
 ```{r}
 library(VIM)
-aggr(df, col = c("blue", "yellow"), number = TRUE, sortVars = TRUE)
+aggr(df, col = c("orange", "black"), number = TRUE, sortVars = TRUE)
 ```
 
 
@@ -71,7 +71,7 @@ df <- replace(df, df == 'Unknown' |
 5. Replot the number of NAs for each column. 
 
 ```{r}
-aggr(df, col = c("green", "orange"), numbers = TRUE, sortVars = TRUE)
+aggr(df, col = c("green", "purple"), numbers = TRUE, sortVars = TRUE)
 ```
 
 6. Approach 1 to handle NAs: remove all rows that have any NAs. Save the dataset after removing as a different data. The original data is unchanged (still have NAs).  How many rows left after removing?
