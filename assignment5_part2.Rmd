@@ -57,7 +57,7 @@ print(missing_counts)
 
 ```{r}
 df <- replace(df, df == 'Unknown' |
-                  df == 'Missing' |
+                  df == 'Not Rep' |
                   df == 'Not Available', NA)
 ```
 
@@ -155,5 +155,6 @@ df$TRAV_SP <- replace_na(df$TRAV_SP, median_trav_sp)
 10. Find the correlation between Age of the drivers and Travel speed (`TRAV_SP`). Hint:  You want to look at the seat positions (`SEAT_POS` variable) to filter out the observations about the drivers, then calculate the correlation. 
 ```{r}
 drivers_data <- df %>% filter(SEAT_POS == "Driver")
+cor(age_trav_speed$Age, age_trav_speed$TRAV_SP)
 ```
 
