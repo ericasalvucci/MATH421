@@ -432,16 +432,24 @@ print(missing_counts)</code></pre>
 ## LONGITUD  HARM_EV LGT_COND  WEATHER 
 ##        0        0        0        0</code></pre>
 <pre class="r"><code>df &lt;- replace(df, df == &#39;Unknown&#39; |
-                  df == &#39;Missing&#39; |
+                  df == &#39;Not Rep&#39; |
                   df == &#39;Not Available&#39;, NA)</code></pre>
 <ol start="4" style="list-style-type: decimal">
-<li><p>Still with variable <code>SEX</code>. After all the missing
-values are in the <code>NAs</code> form. Change the missing values of
-this variable to the majority sex.</p></li>
-<li><p>Let’s study variable <code>AGE</code>. Use the <code>table</code>
+<li>Still with variable <code>SEX</code>. After all the missing values
+are in the <code>NAs</code> form. Change the missing values of this
+variable to the majority sex.</li>
+</ol>
+<pre class="r"><code>majority_sex &lt;-names(which.max(table(df$SEX)))
+df$SEX &lt;- replace_na(df$SEX, majority_sex)
+table(df$SEX)</code></pre>
+<pre><code>## 
+## Female   Male 
+##  26631  53956</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Let’s study variable <code>AGE</code>. Use the <code>table</code>
 function to check out the values of these variable and forms of missing
 values. Use <code>na_if</code> to change all the forms of missing values
-to <code>NAs</code>.</p></li>
+to <code>NAs</code>.</li>
 </ol>
 <pre class="r"><code>df$AGE &lt;- na_if(df$AGE, &quot;&quot;)
 df$AGE &lt;- na_if(df$AGE, &quot;N/A&quot;)
@@ -558,8 +566,8 @@ in each value.</li>
 ##       3      15       6       5      13       5       5       9      22       1 
 ## 123 MPH 124 MPH 125 MPH 126 MPH 128 MPH 130 MPH 134 MPH 137 MPH 140 MPH 150 MPH 
 ##       2       7       1       4       2       7       1       1       3       2 
-## Greater Not Rep Stopped    &lt;NA&gt; 
-##       1   37564    3129   13855</code></pre>
+## Greater Stopped    &lt;NA&gt; 
+##       1    3129   51419</code></pre>
 <pre class="r"><code>df$TRAV_SP &lt;- str_remove(df$TRAV_SP, &quot;MPH&quot;)
 table(df$TRAV_SP, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
@@ -589,8 +597,8 @@ table(df$TRAV_SP, useNA = &quot;ifany&quot;)</code></pre>
 ##       3      15       6       5      13       5       5       9      22       1 
 ##    123     124     125     126     128     130     134     137     140     150  
 ##       2       7       1       4       2       7       1       1       3       2 
-## Greater Not Rep Stopped    &lt;NA&gt; 
-##       1   37564    3129   13855</code></pre>
+## Greater Stopped    &lt;NA&gt; 
+##       1    3129   51419</code></pre>
 <ul>
 <li>Remove the row with the travel speed <code>Greater</code></li>
 </ul>
@@ -625,8 +633,8 @@ table(df$TRAV_SP, useNA = &quot;ifany&quot;)</code></pre>
 ##       3      15       6       5      13       5       5       9      22       1 
 ##    123     124     125     126     128     130     134     137     140     150  
 ##       2       7       1       4       2       7       1       1       3       2 
-## Not Rep Stopped 
-##   37564    3129</code></pre>
+## Stopped 
+##    3129</code></pre>
 <ul>
 <li>Use the <code>str_replace</code> function to replace
 <code>Stopped</code> by ‘0’ (dont forget the quotation mark around
@@ -635,34 +643,24 @@ table(df$TRAV_SP, useNA = &quot;ifany&quot;)</code></pre>
 <pre class="r"><code>df$TRAV_SP &lt;- str_replace(df$TRAV_SP, &quot;Stopped&quot;, &quot;0&quot;)
 table(df$TRAV_SP, useNA = &quot;ifany&quot;)</code></pre>
 <pre><code>## 
-##       0    001     002     003     004     005     006     007     008     009  
-##    3129      36      36      34      13     632      20      30      41      11 
-##    010     011     012     013     014     015     016     017     018     019  
-##     828      25      26      26      25     706      17      26      34      15 
-##    020     021     022     023     024     025     026     027     028     029  
-##     516      16      29      31      19     616      13      20      53      14 
-##    030     031     032     033     034     035     036     037     038     039  
-##     789      23      38      71      35    1446      25      41     122      45 
-##    040     041     042     043     044     045     046     047     048     049  
-##    1430      48      47     135      33    2708      44      47     143      81 
-##    050     051     052     053     054     055     056     057     058     059  
-##    1643      44      65     189      44    3691      50     105     185      68 
-##    060     061     062     063     064     065     066     067     068     069  
-##    1517      68      98     143      47    1912      67      68     243      31 
-##    070     071     072     073     074     075     076     077     078     079  
-##    1614      76      61     113      24     613      43      38      88      40 
-##    080     081     082     083     084     085     086     087     088     089  
-##     527      38      29      44      23     205      30      15      34      15 
-##    090     091     092     093     094     095     096     097     098     099  
-##     209      41      13      15      10      53      23      36      11      16 
-##    100     101     102     103     104     105     106     107     108     109  
-##     187       9       5      11       8      17      12       8       3       6 
-##    110     111     112     113     114     115     116     118     119     120  
-##      24       3      15       6       5      13       5       5       9      22 
-##    122     123     124     125     126     128     130     134     137     140  
-##       1       2       7       1       4       2       7       1       1       3 
-##    150  Not Rep 
-##       2   37564</code></pre>
+##    0 001  002  003  004  005  006  007  008  009  010  011  012  013  014  015  
+## 3129   36   36   34   13  632   20   30   41   11  828   25   26   26   25  706 
+## 016  017  018  019  020  021  022  023  024  025  026  027  028  029  030  031  
+##   17   26   34   15  516   16   29   31   19  616   13   20   53   14  789   23 
+## 032  033  034  035  036  037  038  039  040  041  042  043  044  045  046  047  
+##   38   71   35 1446   25   41  122   45 1430   48   47  135   33 2708   44   47 
+## 048  049  050  051  052  053  054  055  056  057  058  059  060  061  062  063  
+##  143   81 1643   44   65  189   44 3691   50  105  185   68 1517   68   98  143 
+## 064  065  066  067  068  069  070  071  072  073  074  075  076  077  078  079  
+##   47 1912   67   68  243   31 1614   76   61  113   24  613   43   38   88   40 
+## 080  081  082  083  084  085  086  087  088  089  090  091  092  093  094  095  
+##  527   38   29   44   23  205   30   15   34   15  209   41   13   15   10   53 
+## 096  097  098  099  100  101  102  103  104  105  106  107  108  109  110  111  
+##   23   36   11   16  187    9    5   11    8   17   12    8    3    6   24    3 
+## 112  113  114  115  116  118  119  120  122  123  124  125  126  128  130  134  
+##   15    6    5   13    5    5    9   22    1    2    7    1    4    2    7    1 
+## 137  140  150  
+##    1    3    2</code></pre>
 <ul>
 <li>Use <code>na_if</code> to change all the forms of missing values to
 <code>NAs</code></li>
@@ -675,9 +673,8 @@ sum(is.na(df$TRAV_SP))</code></pre>
 <li>Check the type of this variable using <code>class</code>. Use
 <code>as.numeric</code> to change the type to numeric.</li>
 </ul>
-<pre class="r"><code>df$TRAV_SP &lt;- as.numeric(df$TRAV_SP)</code></pre>
-<pre><code>## Warning: NAs introduced by coercion</code></pre>
-<pre class="r"><code>class(df$TRAV_SP)</code></pre>
+<pre class="r"><code>df$TRAV_SP &lt;- as.numeric(df$TRAV_SP)
+class(df$TRAV_SP)</code></pre>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
 <ul>
 <li>Use <code>replace_na</code> to replace the <code>NAs</code> to the
@@ -691,7 +688,16 @@ df$TRAV_SP &lt;- replace_na(df$TRAV_SP, median_trav_sp)</code></pre>
 (<code>SEAT_POS</code> variable) to filter out the observations about
 the drivers, then calculate the correlation.</li>
 </ol>
-<pre class="r"><code>drivers_data &lt;- df %&gt;% filter(SEAT_POS == &quot;Driver&quot;)</code></pre>
+<pre class="r"><code>cleaned_data &lt;- df %&gt;%
+  mutate(
+    AGE = na_if(AGE, NA),
+    TRAV_SP = na_if(TRAV_SP, NA)) %&gt;%
+  filter(SEAT_POS == &quot;Front Seat, Left Side&quot;) %&gt;%
+  drop_na(AGE, TRAV_SP)
+
+
+cor(cleaned_data$AGE, cleaned_data$TRAV_SP)</code></pre>
+<pre><code>## [1] -0.1888421</code></pre>
 
 
 

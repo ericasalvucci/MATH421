@@ -66,6 +66,9 @@ df <- replace(df, df == 'Unknown' |
 4. Still with variable `SEX`. After all the missing values are in the `NAs` form.  Change the missing values of this variable to the majority sex. 
 
 ```{r}
+majority_sex <-names(which.max(table(df$SEX)))
+df$SEX <- replace_na(df$SEX, majority_sex)
+table(df$SEX)
 ```
 
 
@@ -151,10 +154,19 @@ median_trav_sp <- median(df$TRAV_SP, na.rm = TRUE)
 df$TRAV_SP <- replace_na(df$TRAV_SP, median_trav_sp)
 ```
 
-
 10. Find the correlation between Age of the drivers and Travel speed (`TRAV_SP`). Hint:  You want to look at the seat positions (`SEAT_POS` variable) to filter out the observations about the drivers, then calculate the correlation. 
-```{r}
-drivers_data <- df %>% filter(SEAT_POS == "Driver")
-cor(age_trav_speed$Age, age_trav_speed$TRAV_SP)
-```
 
+
+```{r}
+cleaned_data <- df %>%
+  mutate(
+    AGE = na_if(AGE, NA),
+    TRAV_SP = na_if(TRAV_SP, NA)) %>%
+  filter(SEAT_POS == "Front Seat, Left Side") %>%
+  drop_na(AGE, TRAV_SP)
+
+
+cor(cleaned_data$AGE, cleaned_data$TRAV_SP)
+
+
+```
