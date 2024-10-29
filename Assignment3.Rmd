@@ -158,7 +158,7 @@ table(df$deaths3)
 13. Find the average cases in Rhode Island in 2021
 
 ```{r}
-df1 <- df[df$Date_report>='2021-01-01',]
+df <- df[df$Date_report>='2021-01-01',]
 by(df1$New_cases, df1$WHO_region, mean)
 ```
 
