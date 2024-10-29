@@ -99,8 +99,6 @@ These graphs show the average salary for each level of experience.
 
 9. Save a plot and put a link of the plot to your Github Webpage. To link a plot abc.png you just need to insert the following on the README.md
 
-```{r}
-[Link to the plot](abc.png)
 ```
 
 
