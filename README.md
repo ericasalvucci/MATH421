@@ -10,3 +10,5 @@
 # This is my assignment [assignment5_part2](assignment5_part2.html)
 # This is my assignment [assignment6](assignment6.html)
 # This is my assignment [assignment7](assignment7.html)
+# This is my assignment [assignment8](assignment8.html)
+# This is my assignment [assignment9](assignment9.html)
