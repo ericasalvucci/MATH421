@@ -98,19 +98,19 @@ cm$overall[1]
 ```{r}
 trControl = trainControl(method = "cv",
                          number = 7)
-fda <- train(target~., data=df_train, 
-                                method = "fda", 
+mda <- train(target~., data=df_train, 
+                                method = "mda", 
                                 trControl = trControl)
 ada <- train(target~., data=df_train, 
                                 method = "ada", 
                                 trControl = trControl)
-results <- resamples(list('Fda' = fda,
+results <- resamples(list('mda' = mda,
                           'Ada'= ada))
 bwplot(results)
 ```
 
 ```{r}
-pred <- predict(fda, df_test)
+pred <- predict(mda, df_test)
 cm <- confusionMatrix(data = pred, reference = df_test$target, positive = "pos")
 cm$overall[1]
 ```
